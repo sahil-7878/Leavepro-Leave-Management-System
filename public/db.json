@@ -1,0 +1,283 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "name": "Sahil Nerpagar",
+      "email": "manager@company.com",
+      "password": "123456",
+      "role": "manager",
+      "department_id": 1,
+      "status": "active",
+      "created_at": "2026-01-10"
+    },
+    {
+      "id": "2",
+      "name": "Priya Sharma",
+      "email": "employee@company.com",
+      "password": "123456",
+      "role": "employee",
+      "department_id": 1,
+      "status": "active",
+      "created_at": "2026-02-15"
+    },
+    {
+      "id": "3",
+      "name": "Rahul Verma",
+      "email": "rahul@company.com",
+      "password": "123456",
+      "role": "employee",
+      "department_id": 2,
+      "status": "active",
+      "created_at": "2026-03-01"
+    },
+    {
+      "id": "4",
+      "name": "Sneha Patel",
+      "email": "sneha@company.com",
+      "password": "123456",
+      "role": "employee",
+      "department_id": 1,
+      "status": "active",
+      "created_at": "2026-03-10"
+    },
+    {
+      "id": "5",
+      "name": "Amit Kumar",
+      "email": "amit@company.com",
+      "password": "123456",
+      "role": "employee",
+      "department_id": 3,
+      "status": "active",
+      "created_at": "2026-04-05"
+    },
+    {
+      "id": "6",
+      "name": "Neha Singh",
+      "email": "neha@company.com",
+      "password": "123456",
+      "role": "employee",
+      "department_id": 2,
+      "status": "active",
+      "created_at": "2026-04-20"
+    },
+    {
+      "id": "7",
+      "name": "Vikram Joshi",
+      "email": "vikram@company.com",
+      "password": "123456",
+      "role": "employee",
+      "department_id": 1,
+      "status": "active",
+      "created_at": "2026-05-12"
+    },
+    {
+      "id": "8",
+      "name": "Anjali Desai",
+      "email": "anjali@company.com",
+      "password": "123456",
+      "role": "employee",
+      "department_id": 3,
+      "status": "active",
+      "created_at": "2026-06-01"
+    },
+    {
+      "id": "9",
+      "name": "Rohan Kapoor",
+      "email": "rohan@company.com",
+      "password": "123456",
+      "role": "employee",
+      "department_id": 1,
+      "status": "active",
+      "created_at": "2026-06-15"
+    },
+    {
+      "id": "10",
+      "name": "Kavita Iyer",
+      "email": "kavita@company.com",
+      "password": "123456",
+      "role": "employee",
+      "department_id": 2,
+      "status": "active",
+      "created_at": "2026-07-01"
+    },
+    {
+      "id": "11",
+      "name": "Suresh Menon",
+      "email": "suresh@company.com",
+      "password": "123456",
+      "role": "employee",
+      "department_id": 3,
+      "status": "active",
+      "created_at": "2026-07-10"
+    }
+  ],
+  "departments": [
+    { "id": 1, "name": "Engineering", "status": "active", "created_at": "2026-01-01" },
+    { "id": 2, "name": "Human Resources", "status": "active", "created_at": "2026-01-01" },
+    { "id": 3, "name": "Sales & Marketing", "status": "active", "created_at": "2026-01-01" }
+  ],
+  "leave_types": [
+    { "id": 1, "name": "Casual Leave", "code": "CL", "annual_limit": 7, "status": "active" },
+    { "id": 2, "name": "Sick Leave", "code": "SL", "annual_limit": 5, "status": "active" },
+    { "id": 3, "name": "Earned Leave", "code": "EL", "annual_limit": 10, "status": "active" },
+    { "id": 4, "name": "Privilege Leave", "code": "PL", "annual_limit": 5, "status": "active" }
+  ],
+  "leave_requests": [
+    {
+      "id": "1",
+      "employee_id": "2",
+      "leave_type_id": "1",
+      "start_date": "2026-07-01",
+      "end_date": "2026-07-03",
+      "total_days": 3,
+      "reason": "Family function",
+      "status": "Approved",
+      "approved_by": "1",
+      "created_at": "2026-06-25",
+      "updated_at": "2026-06-25"
+    },
+    {
+      "id": "2",
+      "employee_id": "2",
+      "leave_type_id": "2",
+      "start_date": "2026-08-10",
+      "end_date": "2026-08-11",
+      "total_days": 2,
+      "reason": "Fever",
+      "status": "Pending",
+      "approved_by": null,
+      "created_at": "2026-08-01",
+      "updated_at": "2026-08-01"
+    },
+    {
+      "id": "3",
+      "employee_id": "3",
+      "leave_type_id": "3",
+      "start_date": "2026-06-15",
+      "end_date": "2026-06-20",
+      "total_days": 6,
+      "reason": "Vacation",
+      "status": "Approved",
+      "approved_by": "1",
+      "created_at": "2026-06-01",
+      "updated_at": "2026-06-02"
+    },
+    {
+      "id": "4",
+      "employee_id": "3",
+      "leave_type_id": "1",
+      "start_date": "2026-09-05",
+      "end_date": "2026-09-06",
+      "total_days": 2,
+      "reason": "Personal work",
+      "status": "Pending",
+      "approved_by": null,
+      "created_at": "2026-08-25",
+      "updated_at": "2026-08-25"
+    },
+    {
+      "id": "5",
+      "employee_id": "4",
+      "leave_type_id": "4",
+      "start_date": "2026-05-10",
+      "end_date": "2026-05-12",
+      "total_days": 3,
+      "reason": "Wedding",
+      "status": "Approved",
+      "approved_by": "1",
+      "created_at": "2026-04-28",
+      "updated_at": "2026-04-30"
+    },
+    {
+      "id": "6",
+      "employee_id": "5",
+      "leave_type_id": "1",
+      "start_date": "2026-10-01",
+      "end_date": "2026-10-02",
+      "total_days": 2,
+      "reason": "Festival",
+      "status": "Pending",
+      "approved_by": null,
+      "created_at": "2026-09-20",
+      "updated_at": "2026-09-20"
+    },
+    {
+      "id": "7",
+      "employee_id": "6",
+      "leave_type_id": "2",
+      "start_date": "2026-07-20",
+      "end_date": "2026-07-21",
+      "total_days": 2,
+      "reason": "Medical checkup",
+      "status": "Approved",
+      "approved_by": "1",
+      "created_at": "2026-07-10",
+      "updated_at": "2026-07-11"
+    },
+    {
+      "id": "8",
+      "employee_id": "7",
+      "leave_type_id": "3",
+      "start_date": "2026-11-01",
+      "end_date": "2026-11-05",
+      "total_days": 5,
+      "reason": "Diwali vacation",
+      "status": "Pending",
+      "approved_by": null,
+      "created_at": "2026-10-15",
+      "updated_at": "2026-10-15"
+    },
+    {
+      "id": "9",
+      "employee_id": "8",
+      "leave_type_id": "1",
+      "start_date": "2026-12-20",
+      "end_date": "2026-12-22",
+      "total_days": 3,
+      "reason": "Christmas",
+      "status": "Approved",
+      "approved_by": "1",
+      "created_at": "2026-12-01",
+      "updated_at": "2026-12-02"
+    },
+    {
+      "id": "10",
+      "employee_id": "9",
+      "leave_type_id": "2",
+      "start_date": "2026-08-05",
+      "end_date": "2026-08-06",
+      "total_days": 2,
+      "reason": "Sick",
+      "status": "Rejected",
+      "approved_by": "1",
+      "created_at": "2026-07-30",
+      "updated_at": "2026-08-01"
+    },
+    {
+      "id": "11",
+      "employee_id": "10",
+      "leave_type_id": "4",
+      "start_date": "2026-09-10",
+      "end_date": "2026-09-12",
+      "total_days": 3,
+      "reason": "Family trip",
+      "status": "Pending",
+      "approved_by": null,
+      "created_at": "2026-08-30",
+      "updated_at": "2026-08-30"
+    },
+    {
+      "id": "12",
+      "employee_id": "11",
+      "leave_type_id": "3",
+      "start_date": "2026-06-01",
+      "end_date": "2026-06-03",
+      "total_days": 3,
+      "reason": "Personal",
+      "status": "Approved",
+      "approved_by": "1",
+      "created_at": "2026-05-20",
+      "updated_at": "2026-05-21"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+﻿* { box-sizing: border-box; }
+body { margin: 0; font-family: "Segoe UI", system-ui, sans-serif; background: #f4f6f9; }
+.app-shell { min-height: 100vh; }
+.sidebar { width: 240px; background: #1e293b; color: #cbd5e1; min-height: 100vh; position: sticky; top: 0; }
+.sidebar .nav-link { color: #cbd5e1; border-radius: 8px; margin-bottom: 4px; padding: 10px 12px; transition: all 0.2s; }
+.sidebar .nav-link:hover { background: #334155; color: #fff; }
+.sidebar .nav-link.active { background: #3b82f6; color: #fff; }
+.main-area { min-height: 100vh; background: #f4f6f9; }
+.content-area { overflow-x: hidden; }
+.stat-card { border-radius: 12px; }
+.login-wrapper { min-height: 100vh; background: linear-gradient(135deg, #1e293b 0%, #3b82f6 100%); padding: 20px; }
+.login-card { width: 100%; max-width: 420px; border-radius: 16px; border: none; }
+.table { background: #fff; }
+.table thead th { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px; color: #64748b; font-weight: 600; }
+@media (max-width: 768px) {
+  .app-shell { flex-direction: column; }
+  .sidebar { width: 100%; min-height: auto; position: relative; }
+  .sidebar .nav { flex-direction: row !important; flex-wrap: wrap; gap: 4px; }
+  .sidebar .nav-link { flex: 1 1 auto; text-align: center; font-size: 0.85rem; }
+}
