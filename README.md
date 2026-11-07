@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # ✨ LeavePro
 
 ### Employee Leave Management System
