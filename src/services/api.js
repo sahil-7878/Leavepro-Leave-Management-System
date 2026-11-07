@@ -1,69 +1,223 @@
-﻿import axios from "axios";
+﻿
+import axios from "axios";
 
-// Check karein ki hum local par hain ya live
-const isLocal = import.meta.env.DEV;
-
-// Local par proxy ya direct URL, Live par db.json
 const API = axios.create({
-  baseURL: isLocal ? "http://localhost:5000" : "/",
+  baseURL: import.meta.env.DEV
+    ? "http://localhost:5000/api"
+    : "https://YOUR-BACKEND-URL/api",
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
+
+// Attach JWT token to every protected request
+API.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem("leavepro_token");
+
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
+// Handle authentication errors
+API.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      localStorage.removeItem("leavepro_token");
+      localStorage.removeItem("leavepro_user");
+    }
+
+    return Promise.reject(error);
+  }
+);
+
+// Normalize MongoDB documents for existing frontend compatibility
+const normalizeUser = (user) => {
+  if (!user) return user;
+
+  return {
+    ...user,
+    id: user.id || user._id,
+    department_id:
+      user.department_id?._id ||
+      user.department_id ||
+      null,
+  };
+};
+
+const normalizeLeave = (leave) => {
+  if (!leave) return leave;
+
+  return {
+    ...leave,
+    id: leave.id || leave._id,
+    employee_id:
+      leave.employee_id?._id ||
+      leave.employee_id,
+    leave_type_id:
+      leave.leave_type_id?._id ||
+      leave.leave_type_id,
+    approved_by:
+      leave.approved_by?._id ||
+      leave.approved_by ||
+      null,
+  };
+};
+
+// AUTHENTICATION
 
 export const loginUser = async (email, password) => {
   try {
-    const url = isLocal ? "/users" : "db.json";
-    const response = await API.get(url);
+    const response = await API.post("/auth/login", {
+      email: email.trim().toLowerCase(),
+      password,
+    });
 
-    // Local aur Live dono ke liye data handle karein
-    const users = isLocal ? response.data : response.data.users;
+    const { token, user } = response.data;
 
-    const user = users.find(
-      (u) =>
-        u.email?.trim().toLowerCase() === email.trim().toLowerCase() &&
-        String(u.password) === String(password)
+    localStorage.setItem("leavepro_token", token);
+    localStorage.setItem(
+      "leavepro_user",
+      JSON.stringify(normalizeUser(user))
     );
 
-    if (!user) {
-      throw new Error("Invalid email or password");
-    }
-
-    if (user.status !== "active") {
-      throw new Error("Your account is inactive");
-    }
-
-    return user;
+    return {
+      ...normalizeUser(user),
+      token,
+    };
   } catch (error) {
     console.error("Login Error:", error);
-    throw error;
+
+    throw new Error(
+      error.response?.data?.message ||
+      error.message ||
+      "Login failed"
+    );
   }
 };
 
-// Helper function for fetching data
-const fetchData = async (endpoint) => {
-  const url = isLocal ? `/${endpoint}` : "db.json";
-  const response = await API.get(url);
-  return isLocal ? response.data : response.data[endpoint];
+export const registerUser = async (payload) => {
+  try {
+    const response = await API.post("/auth/register", payload);
+    return response.data;
+  } catch (error) {
+    throw new Error(
+      error.response?.data?.message || "Registration failed"
+    );
+  }
 };
 
-// ✅ CORRECT ENDPOINTS (underscore ke saath)
-export const getUsers = () => fetchData("users");
-export const getDepartments = () => fetchData("departments");
-export const getLeaveTypes = () => fetchData("leave_types");
-export const getLeaveRequests = () => fetchData("leave_requests");
+export const getProfile = async () => {
+  const response = await API.get("/auth/profile");
+  return normalizeUser(response.data.user || response.data);
+};
+
+export const logoutUser = () => {
+  localStorage.removeItem("leavepro_token");
+  localStorage.removeItem("leavepro_user");
+};
+
+// USERS
+
+export const getUsers = async () => {
+  const response = await API.get("/users");
+
+  return (response.data.users || []).map(normalizeUser);
+};
+
+export const getUserById = async (id) => {
+  const response = await API.get(`/users/${id}`);
+  return normalizeUser(response.data.user || response.data);
+};
+
+export const updateUser = async (id, payload) => {
+  const response = await API.put(`/users/${id}`, payload);
+  return response.data;
+};
+
+export const deleteUser = async (id) => {
+  const response = await API.delete(`/users/${id}`);
+  return response.data;
+};
+
+// DEPARTMENTS
+
+export const getDepartments = async () => {
+  const response = await API.get("/departments");
+
+  return response.data.departments || [];
+};
+
+export const createDepartment = async (payload) => {
+  const response = await API.post("/departments", payload);
+  return response.data;
+};
+
+export const updateDepartment = async (id, payload) => {
+  const response = await API.put(`/departments/${id}`, payload);
+  return response.data;
+};
+
+// LEAVE TYPES
+
+export const getLeaveTypes = async () => {
+  const response = await API.get("/leave-types");
+
+  return response.data.leaveTypes || response.data.leave_types || [];
+};
+
+export const createLeaveType = async (payload) => {
+  const response = await API.post("/leave-types", payload);
+  return response.data;
+};
+
+export const updateLeaveType = async (id, payload) => {
+  const response = await API.put(`/leave-types/${id}`, payload);
+  return response.data;
+};
+
+// LEAVE REQUESTS
+
+export const getLeaveRequests = async () => {
+  const response = await API.get("/leaves");
+
+  return (response.data.leaves || []).map(normalizeLeave);
+};
 
 export const getLeaveRequestById = async (id) => {
-  const requests = await fetchData("leave_requests");
-  return requests.find((r) => String(r.id) === String(id));
+  const response = await API.get(`/leaves/${id}`);
+  return normalizeLeave(response.data.leave);
 };
 
-// Write operations (sirf local par chalenge)
-export const createLeaveRequest = (payload) =>
-  API.post("/leave_requests", payload).then((r) => r.data);
+export const createLeaveRequest = async (payload) => {
+  const response = await API.post("/leaves", payload);
+  return normalizeLeave(response.data.leave);
+};
 
-export const updateLeaveStatus = (id, status, managerId) =>
-  API.patch(`/leave_requests/${id}`, {
+export const updateLeaveStatus = async (id, status) => {
+  const response = await API.patch(`/leaves/${id}/status`, {
     status,
-    approved_by: managerId,
-    updated_at: new Date().toISOString().split("T")[0],
-  }).then((r) => r.data);
+  });
+
+  return normalizeLeave(response.data.leave);
+};
+
+export const deleteLeaveRequest = async (id) => {
+  const response = await API.delete(`/leaves/${id}`);
+  return response.data;
+};
+
+// EMPLOYEE LEAVE BALANCE
+
+export const getLeaveBalance = async () => {
+  const response = await API.get("/leaves/balance");
+  return response.data;
+};
 
 export default API;

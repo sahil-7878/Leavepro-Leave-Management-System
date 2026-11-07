@@ -1,20 +1,398 @@
-﻿* { box-sizing: border-box; }
-body { margin: 0; font-family: "Segoe UI", system-ui, sans-serif; background: #f4f6f9; }
-.app-shell { min-height: 100vh; }
-.sidebar { width: 240px; background: #1e293b; color: #cbd5e1; min-height: 100vh; position: sticky; top: 0; }
-.sidebar .nav-link { color: #cbd5e1; border-radius: 8px; margin-bottom: 4px; padding: 10px 12px; transition: all 0.2s; }
-.sidebar .nav-link:hover { background: #334155; color: #fff; }
-.sidebar .nav-link.active { background: #3b82f6; color: #fff; }
-.main-area { min-height: 100vh; background: #f4f6f9; }
-.content-area { overflow-x: hidden; }
-.stat-card { border-radius: 12px; }
-.login-wrapper { min-height: 100vh; background: linear-gradient(135deg, #1e293b 0%, #3b82f6 100%); padding: 20px; }
-.login-card { width: 100%; max-width: 420px; border-radius: 16px; border: none; }
-.table { background: #fff; }
-.table thead th { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px; color: #64748b; font-weight: 600; }
+﻿/* ==============================
+   GLOBAL RESET
+============================== */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  width: 100%;
+  min-height: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  font-family: "Segoe UI", system-ui, sans-serif;
+  background: #f4f6f9;
+  color: #1e293b;
+  overflow-x: hidden;
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* ==============================
+   GENERAL ELEMENTS
+============================== */
+
+img,
+video,
+canvas,
+svg {
+  max-width: 100%;
+}
+
+input,
+select,
+textarea,
+button {
+  font: inherit;
+  max-width: 100%;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+p {
+  line-height: 1.6;
+}
+
+/* ==============================
+   APP LAYOUT
+============================== */
+
+.app-shell {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.main-area {
+  flex: 1;
+  min-width: 0;
+  min-height: 100vh;
+  background: #f4f6f9;
+}
+
+.content-area {
+  width: 100%;
+  min-width: 0;
+  overflow-x: hidden;
+}
+
+.content-area > * {
+  min-width: 0;
+}
+
+/* ==============================
+   SIDEBAR
+============================== */
+
+.sidebar {
+  width: 240px;
+  flex-shrink: 0;
+  min-height: 100vh;
+  position: sticky;
+  top: 0;
+  background: #1e293b;
+  color: #cbd5e1;
+}
+
+.sidebar .nav-link {
+  color: #cbd5e1;
+  border-radius: 8px;
+  margin-bottom: 4px;
+  padding: 10px 12px;
+  transition: all 0.2s ease;
+}
+
+.sidebar .nav-link:hover {
+  background: #334155;
+  color: #fff;
+}
+
+.sidebar .nav-link.active {
+  background: #3b82f6;
+  color: #fff;
+}
+
+.sidebar-nav {
+  min-width: 0;
+}
+
+.sidebar-logout {
+  width: 100%;
+}
+
+/* ==============================
+   HEADER
+============================== */
+
+.header {
+  width: 100%;
+  min-width: 0;
+  gap: 12px;
+}
+
+.header-welcome {
+  overflow-wrap: anywhere;
+}
+
+.header-right {
+  flex-shrink: 0;
+}
+
+.header-user,
+.header-user-info {
+  min-width: 0;
+}
+
+.header-user-name {
+  max-width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.header-bell,
+.header-user-icon {
+  flex-shrink: 0;
+}
+
+/* ==============================
+   DASHBOARD CARDS
+============================== */
+
+.stat-card {
+  border-radius: 12px;
+  min-width: 0;
+}
+
+.card {
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+
+/* ==============================
+   LOGIN PAGE
+============================== */
+
+.login-wrapper {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1e293b 0%, #3b82f6 100%);
+  padding: 20px;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 420px;
+  border-radius: 16px;
+  border: none;
+}
+
+/* ==============================
+   TABLES
+============================== */
+
+.table {
+  width: 100%;
+  background: #fff;
+  vertical-align: middle;
+}
+
+.table thead th {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #64748b;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table-responsive .table {
+  min-width: 600px;
+  margin-bottom: 0;
+}
+
+/* ==============================
+   FORMS
+============================== */
+
+.form-control,
+.form-select {
+  width: 100%;
+  min-width: 0;
+}
+
+textarea {
+  resize: vertical;
+}
+
+/* ==============================
+   TABLET RESPONSIVENESS
+============================== */
+
 @media (max-width: 768px) {
-  .app-shell { flex-direction: column; }
-  .sidebar { width: 100%; min-height: auto; position: relative; }
-  .sidebar .nav { flex-direction: row !important; flex-wrap: wrap; gap: 4px; }
-  .sidebar .nav-link { flex: 1 1 auto; text-align: center; font-size: 0.85rem; }
+  .app-shell {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    min-height: auto;
+    position: relative;
+    top: auto;
+  }
+
+  .sidebar-nav {
+    flex-direction: row !important;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 6px;
+    padding-bottom: 8px;
+    scrollbar-width: thin;
+  }
+
+  .sidebar .nav-link {
+    flex: 0 0 auto;
+    white-space: nowrap;
+    text-align: center;
+    font-size: 0.85rem;
+    margin-bottom: 0;
+  }
+
+  .sidebar-logout {
+    width: auto;
+    align-self: flex-end;
+    margin-top: 8px;
+  }
+
+  .main-area {
+    width: 100%;
+    min-height: auto;
+  }
+
+  .content-area {
+    padding: 16px !important;
+  }
+
+  .header {
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 12px 16px !important;
+  }
+
+  .header-welcome {
+    font-size: 1rem;
+  }
+
+  .header-right {
+    gap: 12px !important;
+  }
+
+  .stat-card {
+    margin-bottom: 12px;
+  }
+}
+
+/* ==============================
+   SMALL MOBILE RESPONSIVENESS
+============================== */
+
+@media (max-width: 480px) {
+  .content-area {
+    padding: 12px !important;
+  }
+
+  .login-wrapper {
+    padding: 12px;
+  }
+
+  .login-card {
+    max-width: 100%;
+  }
+
+  .sidebar {
+    padding: 12px !important;
+  }
+
+  .sidebar .nav-link {
+    font-size: 0.8rem;
+    padding: 8px 10px;
+  }
+
+  .header {
+    padding: 12px !important;
+    gap: 8px;
+  }
+
+  .header-welcome {
+    font-size: 0.9rem;
+  }
+
+  .header-user-name {
+    max-width: 100px;
+  }
+
+  .header-user-icon {
+    font-size: 24px;
+  }
+
+  .header-bell {
+    font-size: 17px;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.3rem;
+  }
+
+  .table-responsive .table {
+    min-width: 550px;
+  }
+}
+
+/* ==============================
+   EXTRA SMALL DEVICES
+============================== */
+
+@media (max-width: 360px) {
+  .content-area {
+    padding: 10px !important;
+  }
+
+  .header {
+    align-items: flex-start !important;
+  }
+
+  .header-welcome {
+    font-size: 0.85rem;
+  }
+
+  .sidebar .nav-link {
+    font-size: 0.75rem;
+  }
+
+  .login-wrapper {
+    padding: 8px;
+  }
 }
