@@ -4,7 +4,7 @@ import axios from "axios";
 const API = axios.create({
   baseURL: import.meta.env.DEV
     ? "http://localhost:5000/api"
-    : "https://YOUR-BACKEND-URL/api",
+    : "https://leavepro-leave-management-system.onrender.com/api",
   headers: {
     "Content-Type": "application/json",
   },
